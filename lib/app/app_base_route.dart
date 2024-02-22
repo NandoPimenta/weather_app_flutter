@@ -1,0 +1,8 @@
+
+
+enum AppBaseRoute {
+  common,
+  weather
+
+}
+

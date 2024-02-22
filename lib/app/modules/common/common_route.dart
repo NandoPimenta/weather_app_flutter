@@ -1,0 +1,5 @@
+
+enum CommonRoute {
+  splash,
+}
+

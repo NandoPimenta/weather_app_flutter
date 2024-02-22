@@ -1,0 +1,6 @@
+
+enum WeatherRoute {
+  list,
+  detail
+}
+
