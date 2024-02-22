@@ -6,11 +6,10 @@ import '../input_primary/input_primary_widget.dart';
 
 class CustomSearchBoxWidget extends StatelessWidget {
   const CustomSearchBoxWidget(
-      {Key? key,
+      {super.key,
       required this.textController,
       required this.onChanged,
-      this.btnAction})
-      : super(key: key);
+      this.btnAction});
 
   final Function()? btnAction;
   final Function(String) onChanged;
@@ -27,7 +26,7 @@ class CustomSearchBoxWidget extends StatelessWidget {
           Expanded(
               child: InputPrimaryWidget(
             keyboardType: TextInputType.text,
-            label: "Pesquisar...",
+            label: "Nome da cidade...",
             onChanged: onChanged,
             textController: textController,
             icon: MdiIcons.magnify,

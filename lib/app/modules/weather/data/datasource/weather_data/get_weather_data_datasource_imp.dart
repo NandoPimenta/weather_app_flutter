@@ -1,15 +1,15 @@
 import 'package:cloudwalkone/app/core/services/weather/enum_open_weather.dart';
 import 'package:cloudwalkone/app/core/services/weather/weather_service.dart';
-import 'package:cloudwalkone/app/modules/weather/pages/weather_list/domain/entity/weather_entity.dart';
+import 'package:cloudwalkone/app/modules/weather/domain/entity/weather_entity.dart';
 import 'package:package_api/package_api.dart';
 
-import 'get_weather_forecast_datasource.dart';
+import 'get_weather_data_datasource.dart';
 
-class GetWeatherForecastDatasourceImp extends GetWeatherForecastDatasource {
+class GetWeatherDataDatasourceImp extends GetWeatherDataDatasource {
   ApiService apiService;
   WeatherService weatherService;
 
-  GetWeatherForecastDatasourceImp(
+  GetWeatherDataDatasourceImp(
       {required this.apiService, required this.weatherService});
 
   @override

@@ -21,6 +21,7 @@ class DarkTheme extends CustomTheme  with CustomFontsDark{
     @override
   get appBarTheme => const AppBarTheme(
         backgroundColor: Colors.black,
+        iconTheme: IconThemeData(color: Colors.white)
       );
 
   @override
@@ -31,4 +32,6 @@ class DarkTheme extends CustomTheme  with CustomFontsDark{
 
    @override
   get cardBackgroundColor => Colors.black;
+
+  
 }

@@ -27,12 +27,13 @@ class AppStore {
   }
 
   initApp() async {
-    settingsStore.getSettings();
+    
     weatherService.weatherBaseUrl = "https://api.openweathermap.org/data/";
     weatherService.weatherVersion = "2.5";
     weatherService.weatherApiKey = "1ea1e21de670cb24f38cea821293324b";
     await apiService.init(url: weatherService.weatherBaseUrl);
     await Future.delayed(const Duration(seconds: 2));
+    await settingsStore.getSettings();
     var loc = await locationGeolocatorService.getCurrentPossition();
 
     loc.fold((success) {

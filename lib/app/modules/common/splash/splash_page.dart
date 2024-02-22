@@ -15,7 +15,7 @@ class _SplashPageState extends State<SplashPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
-          child: Lottie.asset('assets/lottie/sunny.json')),
+          child: Lottie.asset('assets/lottie/01d.json')),
     );
   }
 }

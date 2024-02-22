@@ -21,6 +21,7 @@ class LightTheme extends CustomTheme with CustomFontsLight {
   @override
   get appBarTheme => const AppBarTheme(
         backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black)
       );
 
   @override

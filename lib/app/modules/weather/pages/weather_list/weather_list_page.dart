@@ -1,13 +1,11 @@
 import 'package:cloudwalkone/app/core/stores/settings/settings_store.dart';
 import 'package:cloudwalkone/app/widgets/custom_search_box/custom_search_box_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_module/module/module.dart';
 
 import 'weather_list_controller.dart';
-import 'widgets/weather_tile_widget.dart';
+import '../../widgets/weather_tile_widget.dart';
 
 class WeatherListPage extends StatefulWidget {
   const WeatherListPage({super.key, required this.controller});
@@ -66,30 +64,28 @@ class _WeatherListPageState extends State<WeatherListPage> {
         SizedBox(
           height: 60.h,
           child: Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 10.w),
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
             child: searchInput(),
           ),
         ),
-     
         AnimatedBuilder(
-          animation: widget.controller.searchWeather,
-          builder: (context,w) {
-            if(widget.controller.searchWeather.value == null) return Container();
-            return SizedBox(
-              height: 140.h,
-              child: Padding(
-                padding:  EdgeInsets.only(top: 20.h),
-                child: tileSearchWeatherAnimation(),
-              ),
-            );
-          }
-        ),
-         SizedBox(
+            animation: widget.controller.searchWeather,
+            builder: (context, w) {
+              if (widget.controller.searchWeather.value == null) {
+                return const SizedBox();
+              }
+              return SizedBox(
+                height: 140.h,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 20.h),
+                  child: tileSearchWeatherAnimation(),
+                ),
+              );
+            }),
+        SizedBox(
           height: 20.h,
         ),
-        SizedBox(
-           height: 140.h,
-          child: tileWeatherAnimation()),
+        SizedBox(height: 140.h, child: tileWeatherAnimation()),
         SizedBox(
           height: 20.h,
         ),
@@ -135,15 +131,21 @@ class _WeatherListPageState extends State<WeatherListPage> {
                         padding: EdgeInsets.symmetric(
                             horizontal: 10.w, vertical: 10.h),
                         child: WeatherTileWidget(
-                          cityName: widget.controller.listWeather
-                              .value[index].city!.name!,
-                          icon: 'assets/lottie/sunny.json',
+                          onTap: () {
+                            widget.controller.openDetail(
+                                id: widget.controller.listWeather.value[index]
+                                    .city!.id!);
+                          },
+                          cityName: widget
+                              .controller.listWeather.value[index].city!.name!,
+                          icon: widget.controller.listWeather.value[index]
+                              .list![0].weather![0].icon!,
                           temp: widget.controller.listWeather.value[index]
                               .list![0].main!.temp!,
-                          tempMax: widget.controller.listWeather
-                              .value[index].list![0].main!.tempMax!,
-                          tempMin: widget.controller.listWeather
-                              .value[index].list![0].main!.tempMin!,
+                          tempMax: widget.controller.listWeather.value[index]
+                              .list![0].main!.tempMax!,
+                          tempMin: widget.controller.listWeather.value[index]
+                              .list![0].main!.tempMin!,
                         ),
                       ),
                     ),
@@ -181,8 +183,12 @@ class _WeatherListPageState extends State<WeatherListPage> {
               );
             }
             return WeatherTileWidget(
+              onTap: () {
+                widget.controller.openDetail(
+                    id: widget.controller.currentWeather.value!.id!);
+              },
               cityName: widget.controller.currentWeather.value!.name!,
-              icon: 'assets/lottie/sunny.json',
+              icon: widget.controller.currentWeather.value!.weather![0].icon!,
               temp: widget.controller.currentWeather.value!.main!.temp!,
               tempMax: widget.controller.currentWeather.value!.main!.tempMax!,
               tempMin: widget.controller.currentWeather.value!.main!.tempMin!,
@@ -190,6 +196,7 @@ class _WeatherListPageState extends State<WeatherListPage> {
           }),
     );
   }
+
   Widget tileSearchWeatherAnimation() {
     return SizedBox(
       height: 130.h,
@@ -205,17 +212,20 @@ class _WeatherListPageState extends State<WeatherListPage> {
                   ),
                 );
               }
-              return  WeatherTileWidget(
-                                cityName: widget.controller.searchWeather
-                                    .value!.city!.name!,
-                                icon: 'assets/lottie/sunny.json',
-                                temp: widget.controller.searchWeather.value!
-                                    .list![0].main!.temp!,
-                                tempMax: widget.controller.searchWeather.value!
-                                    .list![0].main!.tempMax!,
-                                tempMin: widget.controller.searchWeather
-                                    .value!.list![0].main!.tempMin!,
-                              );
+              return WeatherTileWidget(
+                onTap: () {
+                  widget.controller.openDetail(
+                      id: widget.controller.searchWeather.value!.city!.id!);
+                },
+                cityName: widget.controller.searchWeather.value!.city!.name!,
+                icon:  widget.controller.searchWeather.value!.list![0].weather![0].icon!,
+                temp:
+                    widget.controller.searchWeather.value!.list![0].main!.temp!,
+                tempMax: widget
+                    .controller.searchWeather.value!.list![0].main!.tempMax!,
+                tempMin: widget
+                    .controller.searchWeather.value!.list![0].main!.tempMin!,
+              );
             }),
       ),
     );

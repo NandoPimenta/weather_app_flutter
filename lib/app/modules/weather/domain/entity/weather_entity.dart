@@ -7,5 +7,6 @@ class WeatherEntity {
   String? lat;
   String? lon;
   List<WeatherQuery>? queries;
-  WeatherEntity({required this.type, required this.queryType, this.lat, this.lon, this.queries});
+  bool queryById;
+  WeatherEntity({required this.type, required this.queryType, this.lat, this.lon, this.queries, this.queryById = false});
 }

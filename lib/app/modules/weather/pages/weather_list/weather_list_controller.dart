@@ -4,14 +4,16 @@ import 'package:cloudwalkone/app/core/models/weather_model.dart';
 import 'package:cloudwalkone/app/core/models/weather_query_model.dart';
 import 'package:cloudwalkone/app/core/services/weather/enum_open_weather.dart';
 import 'package:cloudwalkone/app/core/stores/user/user_store.dart';
-import 'package:cloudwalkone/app/modules/weather/pages/weather_list/domain/get_weather_data_usercase.dart';
-import 'package:cloudwalkone/app/modules/weather/pages/weather_list/domain/get_weather_forecast_usercase.dart';
+import 'package:cloudwalkone/app/modules/weather/domain/get_weather_data_usercase.dart';
+import 'package:cloudwalkone/app/modules/weather/domain/get_weather_forecast_usercase.dart';
+import 'package:cloudwalkone/app/modules/weather/weather_route.dart';
 import 'package:cloudwalkone/app/widgets/dialogs/custom_dialog.dart';
 import 'package:flutter/widgets.dart';
 import 'package:package_architecture/state/store_events/controller.dart';
+import 'package:package_module/package_module.dart';
 import 'package:package_uikit/widgets/loading/loading_dialog.dart';
 
-import 'domain/entity/weather_entity.dart';
+import '../../domain/entity/weather_entity.dart';
 
 class WeatherListController extends BaseController {
   GetWeatherDataUsercase getWeatherdataUsercase;
@@ -90,4 +92,11 @@ class WeatherListController extends BaseController {
       debugPrint("erro");
     });
   }
+
+
+
+  openDetail({required num id}){
+    AppRoutes.pushNamed(path: StaticRoutes.get(WeatherRoute.detail),argument: id);
+  }
+
 }

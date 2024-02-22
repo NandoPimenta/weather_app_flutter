@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:package_module/package_module.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -18,6 +19,8 @@ class AppWidget extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (_, c) {
+        Intl.defaultLocale = "pt_BR";
+
         return AnimatedBuilder(
             animation: ModularSinglito.get<SettingsStore>().isDark,
             builder: (context, w) {
@@ -33,9 +36,9 @@ class AppWidget extends StatelessWidget {
                     GlobalCupertinoLocalizations.delegate,
                   ],
                   supportedLocales: const [
-                    Locale('en', "US"),
                     Locale('pt', "BR"),
                   ],
+                  locale: const Locale('pt', "BR") ,
                   builder: EasyLoading.init(),
                   theme: ModularSinglito.get<SettingsStore>().isDark.value
                       ? DarkTheme().themeData()

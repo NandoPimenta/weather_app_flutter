@@ -4,10 +4,10 @@ import 'package:cloudwalkone/app/core/services/weather/enum_open_weather.dart';
 import 'open_weather_model.dart';
 
 class WeatherService {
-   late OpenWeatherModel _openWeather;
-    WeatherService(){
-      _openWeather = OpenWeatherModel(apiKey: "",baseUrl: "",version: "");
-    }
+  late OpenWeatherModel _openWeather;
+  WeatherService() {
+    _openWeather = OpenWeatherModel(apiKey: "", baseUrl: "", version: "");
+  }
   String get weatherBaseUrl => _openWeather.baseUrl;
   set weatherBaseUrl(String s) => _openWeather.baseUrl = s;
 
@@ -29,14 +29,31 @@ class WeatherService {
     return "$weatherVersion/$typeCall?lat=$lat&lon=$lon&appid=$weatherApiKey";
   }
 
-    String mountByQueryUrl(
-      { required List<WeatherQuery> query,
-      OpenWeatherApiType type = OpenWeatherApiType.current}) {
+  String mountByQueryUrl(
+      {required List<WeatherQuery> query,
+      OpenWeatherApiType type = OpenWeatherApiType.current,
+      bool queryById = false}) {
     String typeCall = switch (type) {
       OpenWeatherApiType.current => "weather",
-      OpenWeatherApiType.forecast => "forecast"
+      OpenWeatherApiType.forecast => "forecast",
     };
-    String queries = query.map((e) => e.value).toList().toString().replaceAll("[","").replaceAll("]","");
-    return "$weatherVersion/$typeCall?q=$queries&appid=$weatherApiKey";
+    String queries = "";
+    if (queryById) {
+     queries = query
+          .map((e) => "${e.key}=${e.value}")
+          .toList()
+          .toString()
+          .replaceAll("[", "")
+          .replaceAll("]", "");
+    } else {
+      queries = "q=${query
+          .map((e) => e.value)
+          .toList()
+          .toString()
+          .replaceAll("[", "")
+          .replaceAll("]", "")}";
+    }
+
+    return "$weatherVersion/$typeCall?$queries&appid=$weatherApiKey";
   }
 }
