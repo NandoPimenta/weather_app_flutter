@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:conversion_units/conversion_units.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
