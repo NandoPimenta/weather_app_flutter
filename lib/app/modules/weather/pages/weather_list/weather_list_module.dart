@@ -1,5 +1,6 @@
 import 'package:cloudwalkone/app/core/services/api/api_service_module.dart';
 import 'package:cloudwalkone/app/core/services/weather/weather_module.dart';
+import 'package:cloudwalkone/app/core/stores/settings/settings_module.dart';
 import 'package:cloudwalkone/app/core/stores/user/user_module.dart';
 import 'package:package_module/package_module.dart';
 import '../../data/datasource/weather_data/get_weather_data_datasource.dart';
@@ -15,7 +16,7 @@ import 'weather_list_page.dart';
 
 class WeatherListModule extends BaseModule {
   @override
-  List<BaseModule> get imports => [ApiServiceModule(), WeatherServiceModule(), UserModule()];
+  List<BaseModule> get imports => [ApiServiceModule(), WeatherServiceModule(), UserModule(),SettingsModule()];
 
   @override
   void binds(i) {

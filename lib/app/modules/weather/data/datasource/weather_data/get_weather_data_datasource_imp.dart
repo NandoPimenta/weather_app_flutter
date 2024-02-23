@@ -20,7 +20,6 @@ class GetWeatherDataDatasourceImp extends GetWeatherDataDatasource {
       OpenWeatherApiQueryType.query =>
         weatherService.mountByQueryUrl(query: data.queries!, type: data.type),
     };
-
     var resp = await apiService.get(
       path: path,
     );

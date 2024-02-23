@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:package_database/package_database.dart';
+import 'package:package_module/package_module.dart';
 import '../../constants/local_table_consts.dart';
 
 class SettingsStore {
@@ -9,10 +12,25 @@ class SettingsStore {
   SettingsStore({required this.databaseService});
 
   ValueNotifier<bool> isDark = ValueNotifier(false);
+  ValueNotifier<bool> netWork = ValueNotifier(false);
 
   String lat = "";
   String lon = "";
 
+  netCheck()  {
+    InternetConnection().onStatusChange.listen((InternetStatus status) {
+      switch (status) {
+        case InternetStatus.connected:
+          netWork.value = true;
+          AppRoutes.navigation(path: "/");
+          break;
+        case InternetStatus.disconnected:
+          netWork.value = false;
+          
+          break;
+      }
+    });
+  }
 
   changeTheme() {
     isDark.value = !isDark.value;
@@ -40,6 +58,4 @@ class SettingsStore {
       debugPrint("sem Settings");
     }
   }
-
-
 }

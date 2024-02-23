@@ -3,6 +3,7 @@ import 'package:cloudwalkone/app/core/models/weather_forecast_model.dart';
 import 'package:cloudwalkone/app/core/models/weather_model.dart';
 import 'package:cloudwalkone/app/core/models/weather_query_model.dart';
 import 'package:cloudwalkone/app/core/services/weather/enum_open_weather.dart';
+import 'package:cloudwalkone/app/core/stores/settings/settings_store.dart';
 import 'package:cloudwalkone/app/core/stores/user/user_store.dart';
 import 'package:cloudwalkone/app/modules/weather/domain/get_weather_data_usercase.dart';
 import 'package:cloudwalkone/app/modules/weather/domain/get_weather_forecast_usercase.dart';
@@ -18,10 +19,12 @@ import '../../domain/entity/weather_entity.dart';
 class WeatherListController extends BaseController {
   GetWeatherDataUsercase getWeatherdataUsercase;
   GetWeatherForecastUsercase getWeatherForecastUsercase;
+  SettingsStore settingsStore;
   UserStore userStore;
   WeatherListController(
       {required this.getWeatherdataUsercase,
       required this.getWeatherForecastUsercase,
+      required this.settingsStore,
       required this.userStore});
 
   ValueNotifier<WeatherData?> currentWeather = ValueNotifier(null);
@@ -72,7 +75,9 @@ class WeatherListController extends BaseController {
             lon: userStore.lon));
     resp.fold((success) {
       currentWeather.value = success;
-    }, (failure) {
+      userStore.saveCurrent(currentWeather.value!);
+    }, (failure) async{
+      currentWeather.value = await userStore.getCurrent();
       debugPrint("erro");
     });
   }
@@ -88,12 +93,12 @@ class WeatherListController extends BaseController {
         ]));
     resp.fold((success) {
       listWeather.value.add(success);
-    }, (failure) {
+      userStore.saveListWeather(success);
+    }, (failure) async{
+    listWeather.value = (await userStore.getListWeather() ?? []);
       debugPrint("erro");
     });
   }
-
-
 
   openDetail({required num id}){
     AppRoutes.pushNamed(path: StaticRoutes.get(WeatherRoute.detail),argument: id);

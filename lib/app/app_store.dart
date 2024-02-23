@@ -22,18 +22,17 @@ class AppStore {
       required this.approximateService,
       required this.userStore,
       required this.weatherService
-      }) {
-    initApp();
-  }
+      });
 
   initApp() async {
-    
+     settingsStore.netCheck();
     weatherService.weatherBaseUrl = "https://api.openweathermap.org/data/";
     weatherService.weatherVersion = "2.5";
     weatherService.weatherApiKey = "1ea1e21de670cb24f38cea821293324b";
-    await apiService.init(url: weatherService.weatherBaseUrl);
+    await apiService.init(url: weatherService.weatherBaseUrl,connectTimeout: 20,receiveTimeout: 20);
     await Future.delayed(const Duration(seconds: 2));
     await settingsStore.getSettings();
+    
     var loc = await locationGeolocatorService.getCurrentPossition();
 
     loc.fold((success) {
